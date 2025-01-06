@@ -3,8 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1e1e1e;
+  --foreground: #fffde7;
+  --compl-opt1: #ffe600;
+  --compl-opt2: #51d289;
+  --main-dark-base-20: #a3a3a3;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-grey: '#FBFBFB';
+
+  --color-primary: var(--compl-opt1);
+  --color-secondary: var(--compl-opt2);
+  --main-dark-base: var(--background);
+  --box-color-light: var(--foreground);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,4 +29,43 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.budget-form-group {
+  @apply sm:mb-12 mb-16;
+}
+
+.budget-input {
+  @apply w-full px-4 pb-[1.62rem] border-none bg-mainDarkBase shadow-sm transition-all;
+  @apply font-normal leading-normal text-mainDarkBase20 text-center;
+  @apply border-b border-b-boxColorLight;
+  border-bottom: 1px solid var(--box-color-light);
+}
+
+.budget-input:focus {
+  @apply border-b border-b-secondary outline-none;
+  outline: none;
+  border-bottom: 1px solid var(--compl-opt2);
+}
+
+.budget-input:focus:invalid {
+  border-bottom: 1px solid var(--compl-opt1);
+}
+
+.budget-input::-webkit-input-placeholder {
+  @apply text-mainDarkBase20 text-center capitalize;
+}
+
+.budget-input:placeholder-shown + .budget-label {
+  @apply opacity-0 invisible;
+  @apply -translate-y-4;
+}
+
+.budget-label {
+  @apply block w-full px-4 my-1 transition-all;
+  @apply font-normal leading-normal text-mainDarkBase20 text-center capitalize;
 }
