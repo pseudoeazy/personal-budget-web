@@ -21,11 +21,11 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
   return (
     <header className="sticky top-0  border-b border-foreground z-30 ">
       <div className="px-4 sm:px-6 lg:px-8 lg:pt-8">
-        <div className="flex items-center justify-between h-16 -mb-px">
+        <div className="flex items-center justify-between  -mb-px py-4">
           {/* Header: Left side */}
           <div className="flex">
             {/* Hamburger button */}
-            {!sidebarOpen && (
+            {!!sidebarOpen && (
               <button
                 className="text-gray-500 hover:text-gray-600 lg:hidden"
                 aria-controls="sidebar"
@@ -45,7 +45,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 <span className="font-bold text-primary capitalize leading-normal">
                   Expenses
                 </span>
-                <h1 className="text-boxColorLight  ml-auto text-4xl font-normal leading-normal capitalize">
+                <h1 className="text-boxColorLight  ml-auto text-lg md:text-4xl font-normal leading-normal capitalize">
                   monthly <span className="text-complOpt2">budget</span>
                 </h1>
               </div>
@@ -53,29 +53,29 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
           </div>
 
           {/* Header: Right side */}
-          <div className="flex items-center space-x-5 ">
-            {/*  Divider */}
-            {/* <hr className="w-px h-6 bg-foreground mx-3" /> */}
-            <button
-              type="button"
-              className="hidden sm:block px-10 text-xl text-background bg-primary capitalize  font-semibold"
-            >
-              {' '}
-              new Expense
-            </button>
-            <div className="flex justify-center items-center space-x-1">
-              <CircleUser />
-              <span>Welcome Alexander</span>
-            </div>
-            <div className="border">
+          <div className="flex items-center gap-5 flex-col">
+            <div className="flex gap-6">
               <button
-                className="flex space-x-1 font-primary px-10"
+                type="button"
+                className="hidden sm:block px-10 text-xl text-background bg-primary capitalize  font-semibold"
+              >
+                {' '}
+                new Expense
+              </button>
+              <div className="flex justify-center items-center space-x-1">
+                <CircleUser />
+                <span className="text-sm">Welcome Alexander</span>
+              </div>
+            </div>
+            <div className="border border-foreground self-end">
+              <button
+                className="flex items-center justify-center space-x-1 px-10"
                 onClick={() => {
                   console.log('logged out');
                   // signOut({ callbackUrl: '/' })
                 }}
               >
-                <span>Sign Out</span>
+                <span className="text-sm">Sign Out</span>
                 <LogOut />
               </button>
             </div>
