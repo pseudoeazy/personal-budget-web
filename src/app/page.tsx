@@ -13,9 +13,9 @@ export default function Home() {
       </section>
       <section className="flex-1 min-h-screen bg-mainDarkBase pt-24 flex justify-center sm:pb-24">
         <div className="px-10 sm:mt-24 mb-20">
-          <h1 className="mb-14 text-center text-boxColorLight text-[3.75rem] font-normal leading-normal capitalize">
+          <h2 className="mb-14 text-center text-boxColorLight text-[3.75rem] font-normal leading-normal capitalize">
             monthly <span className="text-complOpt2">budget</span>
-          </h1>
+          </h2>
           <Budget />
         </div>
       </section>
