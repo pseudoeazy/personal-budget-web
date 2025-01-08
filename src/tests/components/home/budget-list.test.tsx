@@ -7,7 +7,6 @@ describe('BudgetList', () => {
     render(<BudgetList expenses={[]} />);
 
     const button = screen.getByRole('button');
-    expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent(/add/i);
   });
 
