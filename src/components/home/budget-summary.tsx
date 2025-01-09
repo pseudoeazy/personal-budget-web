@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus } from 'lucide-react';
+import CreateExpense from '../create-expense';
 
 const BudgetSummary = () => {
   return (
@@ -49,9 +49,7 @@ const BudgetSummary = () => {
         </button>
       </div>
 
-      <button className="absolute -bottom-6 -right-3 sm:hidden flex items-center justify-center w-12 h-12 rounded-full bg-primary">
-        <Plus className="w-12 h-12" />
-      </button>
+      <CreateExpense isMobile />
     </div>
   );
 };

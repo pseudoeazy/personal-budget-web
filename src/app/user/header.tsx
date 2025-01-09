@@ -56,7 +56,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
           {/* Header: Right side */}
           <div className="flex items-center gap-5 flex-col">
             <div className="flex gap-6">
-              <CreateExpense />
+              <CreateExpense isMobile={false} />
               <div className="flex justify-center items-center space-x-1">
                 <CircleUser />
                 <span className="text-sm">Welcome Alexander</span>
