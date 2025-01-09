@@ -1,15 +1,38 @@
-import React from 'react';
+'use client';
+import React, { useState, useRef } from 'react';
 
 const Budget = () => {
+  const [category, setCategory] = useState('Select Category');
+  const dropdownRef = useRef<HTMLDetailsElement | null>(null);
+
+  const handleSelect = (
+    e: React.MouseEvent<HTMLUListElement | HTMLLIElement>
+  ) => {
+    const element = e.target as HTMLLIElement;
+    const selectedCategory = element.textContent!;
+    setCategory(selectedCategory);
+
+    const detailsEl = dropdownRef.current;
+    if (detailsEl) {
+      detailsEl.click();
+    }
+  };
+
   return (
     <div className="bg-background border p-8 rounded">
       <form className="flex flex-col">
         <div className="budget-form-group">
           <details className="dropdown w-full">
-            <summary className="btn bg-secondary  m-1 w-full border-0">
-              Select Category &#9660;
+            <summary
+              className="btn bg-secondary  m-1 w-full border-0"
+              ref={dropdownRef}
+            >
+              {category} &#9660;
             </summary>
-            <ul className="menu dropdown-content bg-foreground text-black rounded-box z-[1] w-full p-2 shadow">
+            <ul
+              onClick={handleSelect}
+              className="menu dropdown-content bg-foreground text-black rounded-box z-[1] w-full p-2 shadow"
+            >
               <li>
                 <span>Food</span>
               </li>
