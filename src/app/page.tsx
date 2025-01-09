@@ -1,4 +1,4 @@
-import Budget from '@/components/forms/budget';
+import Signup from '@/components/forms/signup';
 import HomeSVG from '@/components/home/home-svg';
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
           <h2 className="mb-14 text-center text-boxColorLight text-[3.75rem] font-normal leading-normal capitalize">
             monthly <span className="text-complOpt2">budget</span>
           </h2>
-          <Budget />
+          <Signup />
         </div>
       </section>
     </div>

@@ -2,41 +2,51 @@ import React from 'react';
 
 const Budget = () => {
   return (
-    <div>
+    <div className="bg-background border p-8 rounded">
       <form className="flex flex-col">
         <div className="budget-form-group">
-          <input
-            type="number"
-            name="income"
-            id="income"
-            placeholder="insert your income"
-            className="budget-input"
-            autoComplete="off"
-          />
-          <label htmlFor="income" className="budget-label">
-            insert your income
-          </label>
+          <details className="dropdown w-full">
+            <summary className="btn bg-secondary  m-1 w-full border-0">
+              Select Category &#9660;
+            </summary>
+            <ul className="menu dropdown-content bg-foreground text-black rounded-box z-[1] w-full p-2 shadow">
+              <li>
+                <span>Food</span>
+              </li>
+              <li>
+                <span>Rent</span>
+              </li>
+            </ul>
+          </details>
         </div>
         <div className="budget-form-group">
           <input
             type="text"
-            name="goals"
-            id="goals"
-            placeholder="insert your goals"
+            name="name"
+            id="name"
+            placeholder="insert expense name"
             className="budget-input"
+            autoComplete="off"
             required
           />
-          <label htmlFor="goals" className="budget-label">
-            insert your goals
-          </label>
         </div>
-        <div className="pt-16">
+        <div className="budget-form-group">
+          <input
+            type="number"
+            name="amount"
+            id="amount"
+            placeholder="insert expense amount"
+            className="budget-input"
+            autoComplete="off"
+          />
+        </div>
+
+        <div className="pt-8">
           <button
-            disabled={false}
             type="button"
-            className="w-full py-3 px-2 bg-primary text-center capitalize leading-normal font-normal text-xl text-background transition-all duration-500 hover:bg-yellow-400 disabled:opacity-50"
+            className="rounded w-full py-2 px-2 bg-primary text-center capitalize leading-normal font-semibold text-lg text-background transition-all duration-500 hover:bg-yellow-400 disabled:opacity-50"
           >
-            start your calculation
+            Add Expense
           </button>
         </div>
       </form>

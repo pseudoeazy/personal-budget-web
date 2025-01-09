@@ -1,3 +1,4 @@
+import CreateExpense from '@/components/create-expense';
 import { LogOut, CircleUser, BadgeDollarSign } from 'lucide-react';
 
 interface Props {
@@ -55,13 +56,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
           {/* Header: Right side */}
           <div className="flex items-center gap-5 flex-col">
             <div className="flex gap-6">
-              <button
-                type="button"
-                className="hidden sm:block px-10 text-xl text-background bg-primary capitalize  font-semibold"
-              >
-                {' '}
-                new Expense
-              </button>
+              <CreateExpense />
               <div className="flex justify-center items-center space-x-1">
                 <CircleUser />
                 <span className="text-sm">Welcome Alexander</span>

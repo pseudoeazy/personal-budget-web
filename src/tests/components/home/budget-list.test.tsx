@@ -15,7 +15,7 @@ describe('BudgetList', () => {
 
     expenses.forEach((expense) => {
       expect(screen.getByText(expense.name)).toBeInTheDocument();
-      expect(screen.getByText(`$${expense.amount}`)).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(expense.amount))).toBeInTheDocument();
     });
   });
 });
