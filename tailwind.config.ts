@@ -19,7 +19,7 @@ export default {
         boxColorLight: 'var(--box-color-light)',
         mainDarkBase: 'var(--main-dark-base)',
         mainDarkBase20: 'var(--main-dark-base-20)',
-        boardGrey: 'var(--color-grey)',
+        myGrey: 'var(--color-mygrey)',
       },
       fontFamily: {
         openSans: ['"Open Sans"'],

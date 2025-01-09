@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
 import Food from '@/assets/icons/food';
-import { Expense } from '@/types/expense';
+import { Expense } from '@/types/definitions';
 
 interface Props {
   expenses: Expense[];
@@ -48,7 +48,7 @@ const BudgetList: React.FC<Props> = ({ expenses }) => {
 
                     <th>
                       <div className="text-3xl text-foreground text-right capitalize">
-                        ${expense.amount}
+                        £{expense.amount}
                       </div>
                     </th>
                   </tr>
