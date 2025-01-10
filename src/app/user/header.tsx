@@ -1,5 +1,6 @@
 import CreateExpense from '@/components/create-expense';
 import { LogOut, CircleUser, BadgeDollarSign } from 'lucide-react';
+import Link from 'next/link';
 
 interface Props {
   sidebarOpen: boolean;
@@ -46,9 +47,11 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 <span className="font-bold text-primary capitalize leading-normal">
                   Expenses
                 </span>
-                <h1 className="text-boxColorLight  ml-auto text-lg md:text-4xl font-normal leading-normal capitalize">
-                  monthly <span className="text-complOpt2">budget</span>
-                </h1>
+                <Link href="/user/expenses">
+                  <h1 className="text-boxColorLight  ml-auto text-lg md:text-4xl font-normal leading-normal capitalize">
+                    monthly <span className="text-complOpt2">budget</span>
+                  </h1>
+                </Link>
               </div>
             </div>
           </div>

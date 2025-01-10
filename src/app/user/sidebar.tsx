@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
@@ -10,8 +11,10 @@ interface Props {
 }
 
 function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
+  const currentPath = usePathname();
   const sidebar = useRef<HTMLDivElement | null>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
+  console.log({ currentPath });
 
   /* close on click outside */
   useEffect(() => {
@@ -41,7 +44,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
   }, [sidebarOpen, setSidebarOpen]);
 
   return (
-    <div className="lg:w-48 hidden">
+    <div className={`lg:w-60 ${currentPath === '/user' && 'hidden'}`}>
       {/* Sidebar backdrop (mobile only) 64*/}
       <div
         className={`fixed inset-0 bg-primary-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
@@ -54,8 +57,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
       <div
         id="sidebar"
         ref={sidebar}
-        className={`absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 transform h-full overflow-y-scroll lg:overflow-y-auto no-scrollbar w-48 flex-shrink-0 bg-primary-800 p-4 transition-transform duration-200 ease-in-out ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-48'
+        className={`absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 transform h-full overflow-y-scroll lg:overflow-y-auto no-scrollbar w-60 flex-shrink-0 bg-primary-800 p-4 transition-transform duration-200 ease-in-out ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-60'
         }`}
       >
         {/* Sidebar header */}
