@@ -1,9 +1,9 @@
 import React from 'react';
-import AmazonIcon from '@/assets/icons/amazon';
-import GoogleIcon from '@/assets/icons/google';
-import NetflixIcon from '@/assets/icons/netflix';
-import SpotifyIcon from '@/assets/icons/spotify';
-import FacebookIcon from '@/assets/icons/facebook';
+import AmazonIcon from '@/components/icons/amazon';
+import GoogleIcon from '@/components/icons/google';
+import NetflixIcon from '@/components/icons/netflix';
+import SpotifyIcon from '@/components/icons/spotify';
+import FacebookIcon from '@/components/icons/facebook';
 
 const optionalListItems = [
   {

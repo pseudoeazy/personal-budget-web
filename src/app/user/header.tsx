@@ -35,7 +35,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 <span className="font-bold text-primary capitalize leading-normal">
                   Expenses
                 </span>
-                <Link href="/user/expenses">
+                <Link href="/user/">
                   <h1 className="text-boxColorLight  ml-auto text-lg md:text-4xl font-normal leading-normal capitalize">
                     monthly <span className="text-complOpt2">budget</span>
                   </h1>

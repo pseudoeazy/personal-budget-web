@@ -59,7 +59,7 @@ export default {
         },
       },
       fontFamily: {
-        openSans: ['Open Sans"'],
+        openSans: ['Open Sans'],
       },
       borderRadius: {
         lg: 'var(--radius)',

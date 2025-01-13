@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
-import Food from '@/assets/icons/food';
+import Food from '@/components/icons/food';
 import { Expense } from '@/lib/definitions';
 
 interface Props {
