@@ -54,6 +54,7 @@ const Budget: React.FC = () => {
       await createExpense(data);
       setIsSuccess(true);
     } catch (error: unknown) {
+      console.log({ error });
       if (axios.isAxiosError(error)) {
         const apiError = error.response?.data as ApiResponseError;
         setHasError(true);
@@ -80,6 +81,7 @@ const Budget: React.FC = () => {
         <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
           <div className="budget-form-group">
             <Select
+              isRequired
               className="max-w-xs"
               defaultSelectedKeys={['food']}
               label="Select a category"
