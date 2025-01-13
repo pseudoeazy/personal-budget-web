@@ -6,3 +6,8 @@ export type Expense = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type ApiResponseError = {
+  _errors: string[];
+  [key: string]: { _errors: string[] } | string[];
+};

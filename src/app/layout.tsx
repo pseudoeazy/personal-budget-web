@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { openSans } from './fonts';
 import './globals.css';
+import UIProvider from '@/components/providers/ui-provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,9 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${openSans.variable}  antialiased`}>
-        <main className="page">{children}</main>
+        <UIProvider>
+          <main className="page">{children}</main>
+        </UIProvider>
       </body>
     </html>
   );

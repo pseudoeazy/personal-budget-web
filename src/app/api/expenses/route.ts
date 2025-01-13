@@ -3,21 +3,28 @@ import { prisma } from '@/lib/prisma';
 import { createExpenseSchema } from '@/lib/validationSchemas';
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  body.amount = parseInt(body.amount);
-  const validation = createExpenseSchema.safeParse(body);
+  try {
+    const body = await request.json();
+    const validation = createExpenseSchema.safeParse(body);
 
-  if (!validation.success) {
-    return NextResponse.json(validation.error.format(), { status: 400 });
+    if (!validation.success) {
+      return NextResponse.json(validation.error.format(), { status: 400 });
+    }
+
+    const newExpense = await prisma.expense.create({
+      data: {
+        name: body.name,
+        categoryId: body.categoryId,
+        amount: body.amount,
+      },
+    });
+
+    return NextResponse.json(newExpense, { status: 201 });
+  } catch (error: unknown) {
+    console.error(error);
+    return NextResponse.json(
+      { _errors: ['Unexpected error occurred'] },
+      { status: 500 }
+    );
   }
-
-  const newExpense = await prisma.expense.create({
-    data: {
-      name: body.name,
-      categoryId: body.categoryId,
-      amount: body.amount,
-    },
-  });
-
-  return NextResponse.json(newExpense, { status: 201 });
 }

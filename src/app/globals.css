@@ -40,7 +40,7 @@ body {
 }
 
 .budget-input {
-  @apply w-full px-4 pb-[1.62rem] border-none bg-mainDarkBase shadow-sm transition-all;
+  @apply w-full px-4 py-1.5 border-none bg-mainDarkBase shadow-sm transition-all rounded-sm;
   @apply font-normal leading-normal text-mainDarkBase20 text-center;
   @apply border-b border-b-boxColorLight;
   border-bottom: 1px solid var(--box-color-light);
