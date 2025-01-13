@@ -1,23 +1,11 @@
 import CreateExpense from '@/components/create-expense';
-import { LogOut, CircleUser, BadgeDollarSign } from 'lucide-react';
+import { LogOut, CircleUser, BadgeDollarSign, Menu } from 'lucide-react';
 import Link from 'next/link';
 
 interface Props {
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<boolean>;
 }
-
-const MenuIcon = () => (
-  <svg
-    className="w-6 h-6 fill-current"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect x="4" y="5" width="16" height="2" />
-    <rect x="4" y="11" width="16" height="2" />
-    <rect x="4" y="17" width="16" height="2" />
-  </svg>
-);
 
 function Header({ sidebarOpen, setSidebarOpen }: Props) {
   return (
@@ -27,7 +15,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
           {/* Header: Left side */}
           <div className="flex">
             {/* Hamburger button */}
-            {!!sidebarOpen && (
+            {!sidebarOpen && (
               <button
                 className="text-gray-500 hover:text-gray-600 lg:hidden"
                 aria-controls="sidebar"
@@ -35,7 +23,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 onClick={() => setSidebarOpen(!sidebarOpen)}
               >
                 <span className="sr-only">Open sidebar</span>
-                <MenuIcon />
+                <Menu />
               </button>
             )}
             {/*-translate-x-8 */}

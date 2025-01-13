@@ -2,7 +2,8 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
+import { clsx } from 'clsx';
 
 interface Props {
   children: React.ReactNode;
@@ -11,10 +12,8 @@ interface Props {
 }
 
 function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
-  const currentPath = usePathname();
   const sidebar = useRef<HTMLDivElement | null>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
-  console.log({ currentPath });
 
   /* close on click outside */
   useEffect(() => {
@@ -44,12 +43,15 @@ function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
   }, [sidebarOpen, setSidebarOpen]);
 
   return (
-    <div className={`lg:w-60 ${currentPath === '/user' && 'hidden'}`}>
-      {/* Sidebar backdrop (mobile only) 64*/}
+    <div className="lg:w-48">
+      {/* Sidebar backdrop (mobile only) 48  bg-opacity-30 bg-background opacity-50 s*/}
       <div
-        className={`fixed inset-0 bg-primary-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={clsx({
+          'fixed inset-0  z-40 lg:hidden lg:z-auto transition-opacity duration-200':
+            true,
+          'opacity-100': sidebarOpen,
+          'opacity-0 pointer-events-none': !sidebarOpen,
+        })}
         aria-hidden="true"
       ></div>
 
@@ -57,9 +59,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
       <div
         id="sidebar"
         ref={sidebar}
-        className={`absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 transform h-full overflow-y-scroll lg:overflow-y-auto no-scrollbar w-60 flex-shrink-0 bg-primary-800 p-4 transition-transform duration-200 ease-in-out ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-60'
-        }`}
+        className={clsx({
+          'absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 transform h-full overflow-y-scroll lg:overflow-y-auto no-scrollbar w-48 flex-shrink-0 bg-background p-4 transition-transform duration-200 ease-in-out':
+            true,
+          'translate-x-0': sidebarOpen,
+          '-translate-x-48': !sidebarOpen,
+        })}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2 ">
@@ -72,16 +77,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
             aria-expanded={sidebarOpen}
           >
             <span className="sr-only">Close sidebar</span>
-            <svg
-              className="w-6 h-6 fill-current"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
-            </svg>
+            <ArrowLeft />
           </button>
           {/* Logo */}
-          <Link href="/" className="block">
+          <Link href="/user" className="block">
             <Image
               src="/images/logo.png"
               alt="logo"

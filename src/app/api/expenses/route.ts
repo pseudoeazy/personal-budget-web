@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
-
-const createExpenseSchema = z.object({
-  name: z.string().min(1).max(255),
-  amount: z.number(),
-  categoryId: z.string().min(1).max(3),
-});
+import { createExpenseSchema } from '@/lib/validationSchemas';
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -14,7 +8,7 @@ export async function POST(request: NextRequest) {
   const validation = createExpenseSchema.safeParse(body);
 
   if (!validation.success) {
-    return NextResponse.json(validation.error.errors, { status: 400 });
+    return NextResponse.json(validation.error.format(), { status: 400 });
   }
 
   const newExpense = await prisma.expense.create({

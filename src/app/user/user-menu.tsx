@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
-
-import { BadgeDollarSign, House } from 'lucide-react';
+import { BadgeDollarSign, House, PiggyBank, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 
@@ -15,6 +14,16 @@ const sidebarMenus = [
     icon: <BadgeDollarSign />,
     label: 'expenses',
     path: '/user/expenses',
+  },
+  {
+    icon: <PiggyBank />,
+    label: 'income',
+    path: '/user/income',
+  },
+  {
+    icon: <Settings />,
+    label: 'settings',
+    path: '/user/settings',
   },
 ];
 

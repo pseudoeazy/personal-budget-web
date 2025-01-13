@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
 import Food from '@/assets/icons/food';
-import { Expense } from '@/types/definitions';
+import { Expense } from '@/lib/definitions';
 
 interface Props {
   expenses: Expense[];
@@ -21,9 +21,9 @@ const BudgetList: React.FC<Props> = ({ expenses }) => {
             <table className="table">
               <thead>
                 <tr className="text-foreground">
-                  <th>Name</th>
+                  <th>Expenses</th>
 
-                  <th>Info</th>
+                  <th>Amount</th>
                 </tr>
               </thead>
               <tbody>

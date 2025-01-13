@@ -1,5 +1,6 @@
 'use client';
 import React, { PropsWithChildren, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import Header from './header';
 import Footer from './footer';
 import Sidebar from './sidebar';
@@ -24,6 +25,7 @@ const UserPageLayout = ({ children }: PropsWithChildren) => {
             <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
               {children}
             </div>
+            <Toaster />
           </main>
         </div>
       </div>

@@ -1,9 +1,9 @@
-import { Expense } from '@/types/definitions';
+import { Expense } from '@/lib/definitions';
 
 export const expenses: Expense[] = [
   {
     id: `1`,
-    name: 'Breakfast',
+    name: 'Breakfast in Manilla Casino Resort',
     category: 'Food',
     amount: '125',
     createdAt: `January, 08-2025`,

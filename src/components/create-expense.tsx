@@ -24,9 +24,9 @@ export const NewExpense: React.FC<NewExpenseProps> = ({
       open={isOpen}
     >
       <div className="modal-box">
-        <Budget />
+        <Budget handleClose={handleClose} />
         <div className="modal-action">
-          <button className="btn" onClick={handleClose}>
+          <button id="close_new_expense" className="btn" onClick={handleClose}>
             Close
           </button>
         </div>
