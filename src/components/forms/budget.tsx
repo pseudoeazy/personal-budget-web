@@ -46,8 +46,6 @@ const Budget: React.FC = () => {
   }, [category, setValue]);
 
   const onSubmit: SubmitHandler<CreateExpenseInputs> = async (data) => {
-    setHasError(false);
-    setIsSuccess(false);
     setIsSubmit(true);
 
     try {
@@ -57,11 +55,13 @@ const Budget: React.FC = () => {
       console.log({ error });
       if (axios.isAxiosError(error)) {
         const apiError = error.response?.data as ApiResponseError;
+
         setHasError(true);
         setApiResponse(apiError);
       } else {
         console.error('An unexpected error occurred:', error);
         setHasError(true);
+
         setApiResponse({ _errors: ['An unexpected error occurred'] });
       }
     } finally {

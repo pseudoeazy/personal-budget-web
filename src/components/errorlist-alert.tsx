@@ -15,6 +15,12 @@ import { ApiResponseError } from '@/lib/definitions';
 const ErrorListAlert: React.FC<{ apiErrors: ApiResponseError }> = ({
   apiErrors,
 }) => {
+  const errors = apiErrors?._errors;
+
+  if (!errors) {
+    return null;
+  }
+
   return (
     <div className="relative flex items-center w-full px-1 py-1 mx-auto  md:px-3 lg:px-6 max-w-7xl ">
       <div>

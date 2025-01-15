@@ -2,7 +2,7 @@ export type Expense = {
   id: string;
   name: string;
   category: string;
-  amount: string;
+  amount: number;
   createdAt: string;
   updatedAt: string;
 };
