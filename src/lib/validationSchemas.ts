@@ -9,3 +9,10 @@ export const createExpenseSchema = z.object({
 });
 
 export type CreateExpenseInputs = z.infer<typeof createExpenseSchema>;
+
+export const registerSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(5, 'password must contain at least 5 character(s)'),
+});
+
+export type RegisterUserInputs = z.infer<typeof registerSchema>;

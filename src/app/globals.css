@@ -36,7 +36,7 @@ body {
 }
 
 .budget-form-group {
-  @apply sm:mb-12 mb-16;
+  @apply sm:mb-8 mb-12;
 }
 
 .budget-input {
