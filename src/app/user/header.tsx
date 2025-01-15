@@ -1,5 +1,7 @@
+'use client';
 import CreateExpense from '@/components/create-expense';
 import { LogOut, CircleUser, BadgeDollarSign, Menu } from 'lucide-react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 interface Props {
@@ -8,6 +10,8 @@ interface Props {
 }
 
 function Header({ sidebarOpen, setSidebarOpen }: Props) {
+  const { status, data: session } = useSession();
+  console.log({ session });
   return (
     <header className="sticky top-0  border-b border-foreground z-30 ">
       <div className="px-4 sm:px-6 lg:px-8 lg:pt-8">
@@ -45,27 +49,28 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
           </div>
 
           {/* Header: Right side */}
-          <div className="flex items-center gap-5 flex-col">
-            <div className="flex gap-6">
-              <CreateExpense isMobile={false} />
-              <div className="flex justify-center items-center space-x-1">
-                <CircleUser />
-                <span className="text-sm">Welcome Alexander</span>
+          {status === 'authenticated' && (
+            <div className="flex items-center gap-5 flex-col">
+              <div className="flex gap-6">
+                <CreateExpense isMobile={false} />
+                <div className="flex justify-center items-center space-x-1">
+                  <CircleUser />
+                  <span className="text-sm">Welcome {session.user?.name}</span>
+                </div>
+              </div>
+              <div className="border border-foreground self-end">
+                <button
+                  className="flex items-center justify-center space-x-1 px-10"
+                  onClick={() => {
+                    signOut({ callbackUrl: '/' });
+                  }}
+                >
+                  <span className="text-sm">Sign Out</span>
+                  <LogOut />
+                </button>
               </div>
             </div>
-            <div className="border border-foreground self-end">
-              <button
-                className="flex items-center justify-center space-x-1 px-10"
-                onClick={() => {
-                  console.log('logged out');
-                  // signOut({ callbackUrl: '/' })
-                }}
-              >
-                <span className="text-sm">Sign Out</span>
-                <LogOut />
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </header>

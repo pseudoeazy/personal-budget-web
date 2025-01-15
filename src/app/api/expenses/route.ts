@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createExpenseSchema } from '@/lib/validationSchemas';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/route';
+import { isAuth } from '@/lib/helper';
 
 export async function GET() {
   try {
-    const expenses = await prisma.expense.findMany();
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const expenses = await prisma.expense.findMany({});
     return NextResponse.json(expenses, { status: 200 });
   } catch (error: unknown) {
     console.error(error);

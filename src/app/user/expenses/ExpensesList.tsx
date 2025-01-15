@@ -18,6 +18,7 @@ import {
   Tooltip,
   ScrollShadow,
 } from '@nextui-org/react';
+import { Alert } from '@nextui-org/alert';
 
 import { Plus, Search, Pen, Trash2 } from 'lucide-react';
 import { SharedSelection } from '@nextui-org/system-rsc';
@@ -72,11 +73,7 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function ExpensesList() {
-  const {
-    data: expenses,
-    isLoading,
-    isError,
-  } = useFetch<Expense[]>('/api/expenses');
+  const { data: expenses, isError } = useFetch<Expense[]>('/api/expenses');
 
   const [filterValue, setFilterValue] = useState('');
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
@@ -146,29 +143,35 @@ export default function ExpensesList() {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback(
-    (expense: { [x: string]: any }, columnKey: string | number) => {
-      const cellValue = expense[columnKey];
+    (expense: Expense, columnKey: string | number) => {
+      let cellValue: unknown;
+
+      if (typeof columnKey === 'string' && columnKey in expense) {
+        cellValue = expense[columnKey as keyof Expense];
+      }
 
       switch (columnKey) {
         case 'name':
           return (
             <div className="flex space-x-3 items-center">
               <Food />
-              <p className="text-bold text-small capitalize">{cellValue}</p>
+              <p className="text-bold text-small capitalize">
+                {String(cellValue)}
+              </p>
             </div>
           );
         case 'category':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-small capitalize">
-                {capitalize(cellValue)}
+                {capitalize(String(cellValue))}
               </p>
             </div>
           );
         case 'amount':
           return (
             <Chip className="capitalize" size="sm" variant="flat">
-              {formatToLocalCurrency(cellValue)}
+              {formatToLocalCurrency(Number(cellValue))}
             </Chip>
           );
         case 'actions':
@@ -187,7 +190,7 @@ export default function ExpensesList() {
             </div>
           );
         default:
-          return cellValue;
+          return null;
       }
     },
     []
@@ -333,6 +336,11 @@ export default function ExpensesList() {
 
   return (
     <ScrollShadow orientation="horizontal">
+      {isError && (
+        <div className="flex items-center justify-center w-full my-2">
+          <Alert color="danger" title="Cannot Load Expenses" />
+        </div>
+      )}
       <Table
         isHeaderSticky
         aria-label="Expenses table with custom cells, pagination and sorting"

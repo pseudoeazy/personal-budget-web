@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { openSans } from './fonts';
 import './globals.css';
 import UIProvider from '@/components/providers/ui-provider';
+import AuthProvider from '@/components/providers/auth-provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${openSans.variable}  antialiased`}>
-        <UIProvider>
-          <main className="page">{children}</main>
-        </UIProvider>
+        <AuthProvider>
+          <UIProvider>
+            <main className="page">{children}</main>
+          </UIProvider>
+        </AuthProvider>
       </body>
     </html>
   );
