@@ -33,7 +33,7 @@ const ErrorListAlert: React.FC<{ apiErrors: ApiResponseError }> = ({
                     <Alert
                       description={description}
                       title={title}
-                      color="warning"
+                      color="danger"
                     />
                   </li>
                 );
