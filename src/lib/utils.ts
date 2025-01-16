@@ -1,4 +1,9 @@
+import { startOfMonth, endOfMonth } from 'date-fns';
 import { categories } from '@/data/categories';
+
+export function capitalize(s: string) {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
+}
 
 export function getCategoryInfo(categoryId: string) {
   const category = categories.find((c) => c.id.includes(categoryId));
@@ -16,4 +21,15 @@ export function formatToLocalCurrency(amount: number) {
   }).format(amount);
 
   return formattedAmount;
+}
+
+export function getCurrentMonthRange() {
+  const now = new Date();
+  const startDate = startOfMonth(now);
+  const endDate = endOfMonth(now);
+
+  return {
+    startDate,
+    endDate,
+  };
 }

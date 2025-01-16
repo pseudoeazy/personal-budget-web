@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { startOfMonth, endOfMonth } from 'date-fns';
 import { prisma } from '@/lib/prisma';
 import { createExpenseSchema } from '@/lib/validationSchemas';
 import { getUserSession } from '@/lib/helper';
+import { getCurrentMonthRange } from '@/lib/utils';
 
 export async function GET(request: NextRequest) {
   try {
@@ -17,17 +17,27 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
     console.log({ searchParams, page, limit });
 
+    const { startDate, endDate } = getCurrentMonthRange();
     const expenses = await prisma.expense.findMany({
       where: {
         userId: userSession.user.id,
+        createdAt: {
+          gte: startDate, // Greater than or equal to the start of the month
+          lte: endDate, // Less than or equal to the end of the month
+        },
       },
       orderBy: { createdAt: 'desc' },
       take: limit,
       skip,
     });
+
     const totalExpenses = await prisma.expense.count({
       where: {
         userId: userSession.user.id,
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -82,16 +92,14 @@ export async function DELETE() {
   }
 
   try {
-    const now = new Date();
-    const startOfMonthDate = startOfMonth(now);
-    const endOfMonthDate = endOfMonth(now);
+    const { startDate, endDate } = getCurrentMonthRange();
 
     const deletedExpenses = await prisma.expense.deleteMany({
       where: {
         userId: userSession.user.id,
         createdAt: {
-          gte: startOfMonthDate,
-          lte: endOfMonthDate,
+          gte: startDate,
+          lte: endDate,
         },
       },
     });

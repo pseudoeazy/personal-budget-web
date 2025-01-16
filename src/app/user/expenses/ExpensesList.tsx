@@ -20,7 +20,7 @@ import { Plus, Search, Pen, Trash2 } from 'lucide-react';
 import Food from '@/components/icons/food';
 import useFetch from '@/lib/hooks/useFetch';
 import { Expense, PaginatedExpense } from '@/lib/definitions';
-import { formatToLocalCurrency } from '@/lib/utils';
+import { capitalize, formatToLocalCurrency } from '@/lib/utils';
 import { NewExpense } from '@/components/create-expense';
 
 const columns = [
@@ -31,10 +31,6 @@ const columns = [
   { name: 'DATE', uid: 'createdAt' },
   { name: 'ACTIONS', uid: 'actions' },
 ];
-
-function capitalize(s: string) {
-  return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
-}
 
 function AddNewExpense() {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();

@@ -47,14 +47,22 @@ const Budget: React.FC = () => {
     setValue('categoryId', category);
   }, [category, setValue]);
 
+  const refetchExpense = async () => {
+    const rowsPerPage = [5, 10, 20];
+    for (const row of rowsPerPage) {
+      await mutate(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/expenses?page=1&limit=${row}`
+      );
+    }
+  };
   const onSubmit: SubmitHandler<CreateExpenseInputs> = async (data) => {
     setIsSubmit(true);
 
     try {
       await createExpense(data);
       setIsSuccess(true);
-      //?page=1&sortBy=DESC&orderBy=DESC&limit=20
-      mutate(`${process.env.NEXT_PUBLIC_APP_URL}/api/expenses`);
+
+      refetchExpense();
     } catch (error: unknown) {
       console.log({ error });
       if (axios.isAxiosError(error)) {

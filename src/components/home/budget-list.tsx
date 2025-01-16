@@ -2,19 +2,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { format, parseISO } from 'date-fns';
+import { Button } from '@nextui-org/button';
 import Food from '@/components/icons/food';
-import useFetch from '@/lib/hooks/useFetch';
 import { Alert } from '@nextui-org/alert';
-import { Expense, PaginatedExpense } from '@/lib/definitions';
+import useFetch from '@/lib/hooks/useFetch';
+import { PaginatedExpense } from '@/lib/definitions';
 import DataLoader from '../data-loader';
 import EmptyList from '../empty-list';
-import { Button } from '@nextui-org/button';
+import { capitalize, formatToLocalCurrency } from '@/lib/utils';
 
 const BudgetList: React.FC = () => {
-  const { data, isLoading, isError } = useFetch<PaginatedExpense[]>(
+  const { data, isLoading, isError } = useFetch<PaginatedExpense>(
     '/api/expenses?page=1&limit=5'
   );
-  console.log({ data, isLoading, isError });
+
   return (
     <section className="w-full lg:w-[34.5rem] lg:flex-1">
       <div className="w-full min-h-full  ">
@@ -53,10 +54,17 @@ const BudgetList: React.FC = () => {
                               </div>
                             </div>
                             <div>
-                              <div className="font-bold">{expense.name}</div>
+                              <div className="font-bold">
+                                {capitalize(expense.name)}
+                              </div>
                               <div className="text-sm opacity-50">
-                                <small>Date:</small>{' '}
-                                <strong> {format(parseISO(expense.createdAt), 'MMMM, dd-yyyy')}</strong>
+                                {/* <small>Date:</small> */}
+                                <strong>
+                                  {format(
+                                    parseISO(expense.createdAt),
+                                    'MMMM, dd-yyyy'
+                                  )}
+                                </strong>
                               </div>
                             </div>
                           </div>
@@ -64,7 +72,7 @@ const BudgetList: React.FC = () => {
 
                         <th className="ml-2">
                           <div className="text-3xl text-foreground text-right capitalize">
-                            £{expense.amount}
+                            {formatToLocalCurrency(expense.amount)}
                           </div>
                         </th>
                       </tr>
