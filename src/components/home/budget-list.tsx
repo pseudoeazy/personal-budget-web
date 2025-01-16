@@ -1,19 +1,25 @@
 'use client';
 import React from 'react';
-import Food from '@/components/icons/food';
-import useFetch from '@/lib/hooks/useFetch';
+import Link from 'next/link';
+import { format, parseISO } from 'date-fns';
+import { Button } from '@nextui-org/button';
 import { Alert } from '@nextui-org/alert';
-import { Expense } from '@/lib/definitions';
+import useFetch from '@/lib/hooks/useFetch';
+import { PaginatedExpense } from '@/lib/definitions';
 import DataLoader from '../data-loader';
 import EmptyList from '../empty-list';
+import CategoryIcon from '../categoryIcon';
+import {
+  capitalize,
+  formatToLocalCurrency,
+  getCategoryInfo,
+} from '@/lib/utils';
 
 const BudgetList: React.FC = () => {
-  const {
-    data: expenses,
-    isLoading,
-    isError,
-  } = useFetch<Expense[]>('/api/expenses');
-  console.log({ expenses, isLoading, isError });
+  const { data, isLoading, isError } = useFetch<PaginatedExpense>(
+    '/api/expenses?page=1&limit=5'
+  );
+
   return (
     <section className="w-full lg:w-[34.5rem] lg:flex-1">
       <div className="w-full min-h-full  ">
@@ -29,9 +35,9 @@ const BudgetList: React.FC = () => {
           </div>
         )}
         {isLoading && <DataLoader />}
-        {expenses && (
+        {data && (
           <section>
-            {expenses.length !== 0 ? (
+            {data?.expenses.length !== 0 ? (
               <div className="overflow-x-auto ">
                 <table className="w-full">
                   <thead className="sr-only">
@@ -42,34 +48,55 @@ const BudgetList: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="w-full flex flex-col space-y-4 ">
-                    {expenses.map((expense, i) => (
+                    {data?.expenses.map((expense, i) => (
                       <tr key={i} className="flex justify-between">
                         <td>
                           <div className="flex items-center gap-3">
                             <div>
                               <div>
-                                <Food />
+                                {
+                                  <CategoryIcon
+                                    icon={
+                                      getCategoryInfo(expense.categoryId).icon
+                                    }
+                                  />
+                                }
                               </div>
                             </div>
                             <div>
-                              <div className="font-bold">{expense.name}</div>
-                              {/* <div className="text-sm opacity-50">
-                                <small>Date:</small>{' '}
-                                <strong>{expense.createdAt}</strong>
-                              </div> */}
+                              <div className="font-bold">
+                                {capitalize(expense.name)}
+                              </div>
+                              <div className="text-sm opacity-50">
+                                {/* <small>Date:</small> */}
+                                <strong>
+                                  {format(
+                                    parseISO(expense.createdAt),
+                                    'MMMM, dd-yyyy'
+                                  )}
+                                </strong>
+                              </div>
                             </div>
                           </div>
                         </td>
 
                         <th className="ml-2">
                           <div className="text-3xl text-foreground text-right capitalize">
-                            £{expense.amount}
+                            {formatToLocalCurrency(expense.amount)}
                           </div>
                         </th>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                <div className="py-4">
+                  <Button
+                    radius="sm"
+                    className="w-full flex items-center justify-center py-2 px-15 rounded text-center text-xl text-background bg-primary capitalize  font-normal "
+                  >
+                    <Link href="/user/expenses">See More</Link>
+                  </Button>
+                </div>
               </div>
             ) : (
               <EmptyList title="expenses" />

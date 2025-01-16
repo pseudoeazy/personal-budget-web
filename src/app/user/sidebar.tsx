@@ -87,6 +87,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, children }: Props) {
               width={110}
               height={71}
               className="w-full"
+              priority
             />
           </Link>
         </div>

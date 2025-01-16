@@ -11,7 +11,6 @@ interface Props {
 
 function Header({ sidebarOpen, setSidebarOpen }: Props) {
   const { status, data: session } = useSession();
-  console.log({ session });
   return (
     <header className="sticky top-0  border-b border-foreground z-30 ">
       <div className="px-4 sm:px-6 lg:px-8 lg:pt-8">
@@ -56,7 +55,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 <div className="flex justify-center items-center space-x-1">
                   <CircleUser />
                   <span className="text-sm">
-                    Welcome {session.user?.name || session.user?.email}
+                    Welcome {session.user?.name || session.user?.email}!
                   </span>
                 </div>
               </div>

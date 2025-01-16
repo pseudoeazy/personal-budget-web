@@ -9,18 +9,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSWRConfig } from 'swr';
 import { categories } from '@/data/categories';
 import ErrorListAlert from '../errorlist-alert';
-import { ApiResponseError } from '@/lib/definitions';
+import { ApiResponseError, Expense } from '@/lib/definitions';
 import axios from 'axios';
 import {
   CreateExpenseInputs,
   createExpenseSchema,
 } from '@/lib/validationSchemas';
-import { createExpense } from '@/app/services/expense';
+
 import ErrorMessage from '../error-message';
 
-const Budget: React.FC = () => {
+const EditExpense: React.FC<{ expense: Expense }> = ({ expense }) => {
   const { mutate } = useSWRConfig();
-  const [category, setCategory] = useState(categories[0].id);
+  const [category, setCategory] = useState(expense.categoryId);
   const [isSubmit, setIsSubmit] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -32,6 +32,7 @@ const Budget: React.FC = () => {
     register,
     setValue,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CreateExpenseInputs>({
     resolver: zodResolver(createExpenseSchema),
@@ -47,6 +48,10 @@ const Budget: React.FC = () => {
     setValue('categoryId', category);
   }, [category, setValue]);
 
+  useEffect(() => {
+    reset({ name: expense.name, amount: expense.amount });
+  }, [expense]);
+
   const refetchExpense = async () => {
     const rowsPerPage = [5, 10, 20];
     for (const row of rowsPerPage) {
@@ -59,7 +64,7 @@ const Budget: React.FC = () => {
     setIsSubmit(true);
 
     try {
-      await createExpense(data);
+      await axios.put('/api/expenses/' + expense.id, data);
       setIsSuccess(true);
 
       refetchExpense();
@@ -85,7 +90,7 @@ const Budget: React.FC = () => {
     <div className="p-8 rounded">
       {isSuccess && (
         <div className="w-full flex items-center my-3">
-          <Alert color="success" title={`Expense added successfully`} />
+          <Alert color="success" title={`Expense updated successfully`} />
         </div>
       )}
       {hasError && <ErrorListAlert apiErrors={apiResponse} />}
@@ -95,7 +100,7 @@ const Budget: React.FC = () => {
             <Select
               isRequired
               className="max-w-xs"
-              defaultSelectedKeys={['food']}
+              defaultSelectedKeys={[expense.categoryId]}
               label="Select a category"
               onChange={handleSelect}
             >
@@ -139,7 +144,7 @@ const Budget: React.FC = () => {
               type="submit"
               className="rounded w-full py-2 px-2 bg-primary text-center capitalize leading-normal font-semibold text-lg text-background transition-all duration-500 hover:bg-yellow-400 disabled:opacity-50"
             >
-              Add Expense {isSubmit && <Spinner color="success" size="sm" />}
+              Update Expense {isSubmit && <Spinner color="success" size="sm" />}
             </Button>
           </div>
         </form>
@@ -148,4 +153,4 @@ const Budget: React.FC = () => {
   );
 };
 
-export default Budget;
+export default EditExpense;

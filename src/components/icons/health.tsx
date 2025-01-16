@@ -1,5 +1,5 @@
 import * as React from 'react';
-const SVGComponent = (
+const Health = (
   props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
 ) => (
   <svg
@@ -17,4 +17,4 @@ const SVGComponent = (
     />
   </svg>
 );
-export default SVGComponent;
+export default Health;
