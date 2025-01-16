@@ -2,8 +2,8 @@ import React, { PropsWithChildren } from 'react';
 import Footer from './footer';
 import LayoutContent from './layout-content';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/authOptions';
 
 const UserPageLayout = async ({ children }: PropsWithChildren) => {
   const session = await getServerSession(authOptions);

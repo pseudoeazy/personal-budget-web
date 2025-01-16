@@ -33,7 +33,7 @@ const Signup = () => {
   });
 
   const onSubmit: SubmitHandler<RegisterUserInputs> = async (data) => {
-    setFormStatus({ type: 'RESET' });
+    setFormStatus({ type: 'SUBMIT', isSubmit: true });
     try {
       await axios.post('/api/account/register', data);
       setFormStatus({ type: 'SUCCESS', isSuccess: true });

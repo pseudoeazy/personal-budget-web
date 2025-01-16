@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import Signup from '@/components/forms/signup';
 import HomeSVG from '@/components/home/home-svg';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/authOptions';
 
 export default async function Register() {
   const session = await getServerSession(authOptions);

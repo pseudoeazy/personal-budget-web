@@ -43,7 +43,7 @@ const ErrorListAlert: React.FC<{ apiErrors: ApiResponseError }> = ({
               return errors.map((error) => {
                 return (
                   <li key={idx}>
-                    <Alert description={error} title={title} color="warning" />
+                    <Alert description={error} title={title} color="danger" />
                   </li>
                 );
               });

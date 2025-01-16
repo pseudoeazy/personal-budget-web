@@ -16,3 +16,8 @@ export const registerSchema = z.object({
 });
 
 export type RegisterUserInputs = z.infer<typeof registerSchema>;
+
+export const verifyEmailSchema = z.object({
+  email: z.string().email(),
+  token: z.string().min(5),
+});
