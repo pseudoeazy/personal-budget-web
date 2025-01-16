@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/prisma';
-import { getUserSession } from '@/lib/helper';
+import { getUserSession, sendVerifyEmail } from '@/lib/helper';
 import { registerSchema } from '@/lib/validationSchemas';
 
 export async function POST(request: NextRequest) {
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(body.password, 12);
+    const hashedPassword = await bcrypt.hash(body.password, 10);
     const user = await prisma.user.create({
       data: {
         email: body.email,
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    sendVerifyEmail(body.email);
     return NextResponse.json({ email: user.email }, { status: 201 });
   } catch (error) {
     console.error(error);

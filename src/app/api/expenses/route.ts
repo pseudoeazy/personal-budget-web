@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createExpenseSchema } from '@/lib/validationSchemas';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { isLoggedIn } from '@/lib/helper';
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    await isLoggedIn();
 
     const expenses = await prisma.expense.findMany({});
     return NextResponse.json(expenses, { status: 200 });
@@ -23,10 +19,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  await isLoggedIn();
 
   try {
     const body = await request.json();
@@ -38,6 +31,7 @@ export async function POST(request: NextRequest) {
 
     const newExpense = await prisma.expense.create({
       data: {
+        userId: '',
         name: body.name,
         categoryId: body.categoryId,
         amount: body.amount,
