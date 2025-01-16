@@ -1,19 +1,20 @@
 'use client';
 import React from 'react';
+import Link from 'next/link';
+import { format, parseISO } from 'date-fns';
 import Food from '@/components/icons/food';
 import useFetch from '@/lib/hooks/useFetch';
 import { Alert } from '@nextui-org/alert';
-import { Expense } from '@/lib/definitions';
+import { Expense, PaginatedExpense } from '@/lib/definitions';
 import DataLoader from '../data-loader';
 import EmptyList from '../empty-list';
+import { Button } from '@nextui-org/button';
 
 const BudgetList: React.FC = () => {
-  const {
-    data: expenses,
-    isLoading,
-    isError,
-  } = useFetch<Expense[]>('/api/expenses');
-  console.log({ expenses, isLoading, isError });
+  const { data, isLoading, isError } = useFetch<PaginatedExpense[]>(
+    '/api/expenses?page=1&limit=5'
+  );
+  console.log({ data, isLoading, isError });
   return (
     <section className="w-full lg:w-[34.5rem] lg:flex-1">
       <div className="w-full min-h-full  ">
@@ -29,9 +30,9 @@ const BudgetList: React.FC = () => {
           </div>
         )}
         {isLoading && <DataLoader />}
-        {expenses && (
+        {data && (
           <section>
-            {expenses.length !== 0 ? (
+            {data?.expenses.length !== 0 ? (
               <div className="overflow-x-auto ">
                 <table className="w-full">
                   <thead className="sr-only">
@@ -42,7 +43,7 @@ const BudgetList: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="w-full flex flex-col space-y-4 ">
-                    {expenses.map((expense, i) => (
+                    {data?.expenses.map((expense, i) => (
                       <tr key={i} className="flex justify-between">
                         <td>
                           <div className="flex items-center gap-3">
@@ -53,10 +54,10 @@ const BudgetList: React.FC = () => {
                             </div>
                             <div>
                               <div className="font-bold">{expense.name}</div>
-                              {/* <div className="text-sm opacity-50">
+                              <div className="text-sm opacity-50">
                                 <small>Date:</small>{' '}
-                                <strong>{expense.createdAt}</strong>
-                              </div> */}
+                                <strong> {format(parseISO(expense.createdAt), 'MMMM, dd-yyyy')}</strong>
+                              </div>
                             </div>
                           </div>
                         </td>
@@ -70,6 +71,14 @@ const BudgetList: React.FC = () => {
                     ))}
                   </tbody>
                 </table>
+                <div className="py-4">
+                  <Button
+                    radius="sm"
+                    className="w-full flex items-center justify-center py-2 px-15 rounded text-center text-xl text-background bg-primary capitalize  font-normal "
+                  >
+                    <Link href="/user/expenses">See More</Link>
+                  </Button>
+                </div>
               </div>
             ) : (
               <EmptyList title="expenses" />

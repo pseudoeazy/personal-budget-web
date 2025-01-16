@@ -4,21 +4,35 @@ import { prisma } from '@/lib/prisma';
 import { createExpenseSchema } from '@/lib/validationSchemas';
 import { getUserSession } from '@/lib/helper';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const userSesson = await getUserSession();
-    if (!userSesson) {
+    const userSession = await getUserSession();
+    if (!userSession) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const searchParams = request.nextUrl.searchParams;
+
+    const page = Number(searchParams.get('page') ?? 1);
+    const limit = Number(searchParams.get('limit') ?? 5);
+    const skip = (page - 1) * limit;
+    console.log({ searchParams, page, limit });
 
     const expenses = await prisma.expense.findMany({
       where: {
-        userId: userSesson.user.id,
+        userId: userSession.user.id,
+      },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+      skip,
+    });
+    const totalExpenses = await prisma.expense.count({
+      where: {
+        userId: userSession.user.id,
       },
       orderBy: { createdAt: 'desc' },
     });
 
-    return NextResponse.json(expenses, { status: 200 });
+    return NextResponse.json({ expenses, totalExpenses }, { status: 200 });
   } catch (error: unknown) {
     console.error(error);
     return NextResponse.json(
@@ -29,8 +43,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const userSesson = await getUserSession();
-  if (!userSesson) {
+  const userSession = await getUserSession();
+  if (!userSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -44,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     const newExpense = await prisma.expense.create({
       data: {
-        userId: userSesson.user.id,
+        userId: userSession.user.id,
         name: body.name,
         categoryId: body.categoryId,
         amount: body.amount,
