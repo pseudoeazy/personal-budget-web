@@ -12,7 +12,6 @@ import {
   Button,
   Chip,
   Pagination,
-  Tooltip,
   useDisclosure,
 } from '@nextui-org/react';
 import { useSWRConfig } from 'swr';
@@ -22,6 +21,8 @@ import useFetch from '@/lib/hooks/useFetch';
 import { Expense, PaginatedExpense } from '@/lib/definitions';
 import { capitalize, formatToLocalCurrency } from '@/lib/utils';
 import { NewExpense } from '@/components/create-expense';
+import EditExpense from './update-expense';
+import DeleteExpense from './delete-expense';
 
 const columns = [
   // { name: 'ID', uid: 'id' },
@@ -114,16 +115,8 @@ export default function ExpensesList() {
         case 'actions':
           return (
             <div className="relative flex items-center justify-center gap-2">
-              <Tooltip content="Edit expense">
-                <span className="text-lg text-default-400 cursor-pointer">
-                  <Pen />
-                </span>
-              </Tooltip>
-              <Tooltip color="danger" content="Delete expense">
-                <span className="text-lg text-danger cursor-pointer">
-                  <Trash2 />
-                </span>
-              </Tooltip>
+              <EditExpense expense={expense} />
+              <DeleteExpense expense={expense} />
             </div>
           );
         default:

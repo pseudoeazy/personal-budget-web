@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
     const page = Number(searchParams.get('page') ?? 1);
     const limit = Number(searchParams.get('limit') ?? 5);
     const skip = (page - 1) * limit;
-    console.log({ searchParams, page, limit });
 
     const { startDate, endDate } = getCurrentMonthRange();
     const expenses = await prisma.expense.findMany({

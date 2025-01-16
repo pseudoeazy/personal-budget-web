@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import CreateExpense from '../create-expense';
 import useFetch from '@/lib/hooks/useFetch';
 import { formatToLocalCurrency } from '@/lib/utils';
+import { Button } from '@nextui-org/button';
+import ResetExpenses from './reset-expenses';
 
 type DataProps = {
   amount: number;
@@ -59,15 +61,7 @@ const BudgetSummary = () => {
       </div>
 
       <div className="pt-10 border-t-2 border-['#B2B2B2']">
-        <button
-          style={{
-            boxShadow: `0px 3.511px 10.534px 0px rgba(0, 0, 0, 0.04)`,
-          }}
-          type="button"
-          className="w-full flex items-center justify-center py-2 px-15 rounded text-center text-xl text-background bg-primary capitalize  font-normal "
-        >
-          reset expenses
-        </button>
+        <ResetExpenses />
       </div>
 
       <CreateExpense isMobile />
