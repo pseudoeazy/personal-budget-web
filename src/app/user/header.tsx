@@ -55,7 +55,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 <div className="flex justify-center items-center space-x-1">
                   <CircleUser />
                   <span className="text-sm">
-                    Welcome {session.user?.name || session.user?.email}
+                    Welcome {session.user?.name || session.user?.email}!
                   </span>
                 </div>
               </div>

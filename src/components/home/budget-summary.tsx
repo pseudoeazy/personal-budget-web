@@ -5,6 +5,7 @@ import useFetch from '@/lib/hooks/useFetch';
 import { formatToLocalCurrency } from '@/lib/utils';
 import { Button } from '@nextui-org/button';
 import ResetExpenses from './reset-expenses';
+import BugdgetGraph from './budget-graph';
 
 type DataProps = {
   amount: number;
@@ -38,7 +39,8 @@ const BudgetSummary = () => {
         </span>
       </div>
       <div className="flex justify-center">
-        <div className=" relative w-48 h-48  border-[10px] border-['#D2D2D2'] rounded-full"></div>
+        <BugdgetGraph />
+        {/* <div className=" relative w-48 h-48  border-[10px] border-['#D2D2D2'] rounded-full"></div> */}
       </div>
 
       <div className="flex space-x-1 text-center">

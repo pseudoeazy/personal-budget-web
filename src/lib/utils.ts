@@ -8,8 +8,10 @@ export function capitalize(s: string) {
 export function getCategoryInfo(categoryId: string) {
   const category = categories.find((c) => c.id.includes(categoryId));
   if (category) {
+    console.log({ category });
     return category;
   }
+  console.log({ lastCategory: categories[6] });
   return categories[6];
 }
 

@@ -15,14 +15,19 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { useSWRConfig } from 'swr';
-import { Plus, Search, Pen, Trash2 } from 'lucide-react';
-import Food from '@/components/icons/food';
+import { Plus, Search } from 'lucide-react';
 import useFetch from '@/lib/hooks/useFetch';
 import { Expense, PaginatedExpense } from '@/lib/definitions';
-import { capitalize, formatToLocalCurrency } from '@/lib/utils';
+import {
+  capitalize,
+  formatToLocalCurrency,
+  getCategoryInfo,
+} from '@/lib/utils';
 import { NewExpense } from '@/components/create-expense';
 import EditExpense from './update-expense';
 import DeleteExpense from './delete-expense';
+import CategoryIcon from '@/components/categoryIcon';
+import EmptyList from '@/components/empty-list';
 
 const columns = [
   // { name: 'ID', uid: 'id' },
@@ -83,7 +88,7 @@ export default function ExpensesList() {
         case 'name':
           return (
             <div className="flex space-x-3 items-center">
-              <Food />
+              <CategoryIcon icon={getCategoryInfo(expense.categoryId).icon} />
               <p className="text-bold text-small capitalize">
                 {capitalize(expense.name)}
               </p>
@@ -153,7 +158,10 @@ export default function ExpensesList() {
               <TableColumn key={column.uid}>{column.name}</TableColumn>
             )}
           </TableHeader>
-          <TableBody items={filteredItems}>
+          <TableBody
+            items={filteredItems}
+            emptyContent={<EmptyList title={'expenses'} />}
+          >
             {(item) => (
               <TableRow key={item.id}>
                 {(columnKey) => (

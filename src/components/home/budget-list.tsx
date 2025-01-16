@@ -3,13 +3,17 @@ import React from 'react';
 import Link from 'next/link';
 import { format, parseISO } from 'date-fns';
 import { Button } from '@nextui-org/button';
-import Food from '@/components/icons/food';
 import { Alert } from '@nextui-org/alert';
 import useFetch from '@/lib/hooks/useFetch';
 import { PaginatedExpense } from '@/lib/definitions';
 import DataLoader from '../data-loader';
 import EmptyList from '../empty-list';
-import { capitalize, formatToLocalCurrency } from '@/lib/utils';
+import CategoryIcon from '../categoryIcon';
+import {
+  capitalize,
+  formatToLocalCurrency,
+  getCategoryInfo,
+} from '@/lib/utils';
 
 const BudgetList: React.FC = () => {
   const { data, isLoading, isError } = useFetch<PaginatedExpense>(
@@ -50,7 +54,13 @@ const BudgetList: React.FC = () => {
                           <div className="flex items-center gap-3">
                             <div>
                               <div>
-                                <Food />
+                                {
+                                  <CategoryIcon
+                                    icon={
+                                      getCategoryInfo(expense.categoryId).icon
+                                    }
+                                  />
+                                }
                               </div>
                             </div>
                             <div>
