@@ -1,12 +1,19 @@
+import { getUserSession } from '@/lib/helper';
 import { prisma } from '@/lib/prisma';
 import { createExpenseSchema } from '@/lib/validationSchemas';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+interface Props {
+  params: { id: string };
+}
+
+export async function GET(request: NextRequest, { params }: Props) {
   try {
+    const userSession = await getUserSession();
+    if (!userSession) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const expense = await prisma.expense.findUnique({
       where: {
         id: params.id,

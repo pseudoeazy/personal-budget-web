@@ -17,6 +17,7 @@ import {
   Pagination,
   Tooltip,
   ScrollShadow,
+  useDisclosure,
 } from '@nextui-org/react';
 import { Alert } from '@nextui-org/alert';
 
@@ -26,6 +27,8 @@ import Food from '@/components/icons/food';
 import useFetch from '@/lib/hooks/useFetch';
 import { Expense } from '@/lib/definitions';
 import { formatToLocalCurrency } from '@/lib/utils';
+import EmptyList from '@/components/empty-list';
+import { NewExpense } from '@/components/create-expense';
 
 const columns = [
   { name: 'ID', uid: 'id', sortable: true },
@@ -64,13 +67,23 @@ const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => {
   );
 };
 
-const INITIAL_VISIBLE_COLUMNS = [
-  'name',
-  'categoryId',
-  'amount',
-  'createdAt',
-  'actions',
-];
+const INITIAL_VISIBLE_COLUMNS = ['name', 'categoryId', 'amount', 'actions'];
+
+function AddNexExpense() {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  return (
+    <div>
+      <Button onPress={onOpen} color="primary" endContent={<Plus />}>
+        Add New
+      </Button>
+      <NewExpense
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+      />
+    </div>
+  );
+}
 
 export default function ExpensesList() {
   const { data: expenses, isError } = useFetch<Expense[]>('/api/expenses');
@@ -268,9 +281,8 @@ export default function ExpensesList() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<Plus />}>
-              Add New
-            </Button>
+
+            <AddNexExpense />
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -368,7 +380,10 @@ export default function ExpensesList() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={'No expenses found'} items={sortedItems}>
+        <TableBody
+          emptyContent={<EmptyList title={'expenses'} />}
+          items={sortedItems}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

@@ -1,4 +1,5 @@
 export type Expense = {
+  userId: string;
   id: string;
   name: string;
   category: string;

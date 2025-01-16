@@ -67,3 +67,49 @@ async function createVerificationToken(identifier: string) {
 
   return verificationToken;
 }
+
+export async function verifyAndDeleteToken(identifier: string, token: string) {
+  const verificationToken = await prisma.verificationToken.findUnique({
+    where: {
+      identifier_token: {
+        identifier,
+        token,
+      },
+    },
+  });
+
+  if (!verificationToken) {
+    throw new Error('Invalid or expired token');
+  }
+
+  const expires = new Date(verificationToken.expires);
+  if (new Date() > expires) {
+    sendVerifyEmail(identifier);
+    throw new Error('Token has expired. Please check your email.');
+  }
+
+  try {
+    await prisma.verificationToken.delete({
+      where: {
+        identifier_token: {
+          identifier,
+          token,
+        },
+      },
+    });
+    await prisma.user.update({
+      where: {
+        email: identifier,
+      },
+      data: {
+        emailVerified: new Date(),
+      },
+    });
+  } catch (error) {
+    console.error('Error deleting token:', error);
+    throw new Error('Failed to delete the token.');
+  }
+
+  console.log('Token verified and deleted successfully');
+  return true;
+}

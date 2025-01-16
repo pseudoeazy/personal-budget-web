@@ -1,57 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import { prisma } from '@/lib/prisma';
-import { createExpenseSchema } from '@/lib/validationSchemas';
+import { createIncomeSchema } from '@/lib/validationSchemas';
 import { getUserSession } from '@/lib/helper';
 
 export async function GET() {
   try {
-    const userSesson = await getUserSession();
-    if (!userSesson) {
+    const userSession = await getUserSession();
+    if (!userSession) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const expenses = await prisma.expense.findMany({
+    const incomes = await prisma.income.findMany({
       where: {
-        userId: userSesson.user.id,
+        userId: userSession.user.id,
       },
       orderBy: { createdAt: 'desc' },
     });
 
-    return NextResponse.json(expenses, { status: 200 });
+    return NextResponse.json(incomes, { status: 200 });
   } catch (error: unknown) {
     console.error(error);
     return NextResponse.json(
-      { _errors: ['cannot retrieve expenses at this time'] },
+      { _errors: ['cannot retrieve incomes at this time'] },
       { status: 500 }
     );
   }
 }
 
 export async function POST(request: NextRequest) {
-  const userSesson = await getUserSession();
-  if (!userSesson) {
+  const userSession = await getUserSession();
+  if (!userSession) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
     const body = await request.json();
-    const validation = createExpenseSchema.safeParse(body);
+    const validation = createIncomeSchema.safeParse(body);
 
     if (!validation.success) {
       return NextResponse.json(validation.error.format(), { status: 400 });
     }
 
-    const newExpense = await prisma.expense.create({
+    const newIncome = await prisma.income.create({
       data: {
-        userId: userSesson.user.id,
+        userId: userSession.user.id,
         name: body.name,
-        categoryId: body.categoryId,
         amount: body.amount,
       },
     });
 
-    return NextResponse.json(newExpense, { status: 201 });
+    return NextResponse.json(newIncome, { status: 201 });
   } catch (error: unknown) {
     console.error(error);
     return NextResponse.json(
@@ -72,7 +71,7 @@ export async function DELETE() {
     const startOfMonthDate = startOfMonth(now);
     const endOfMonthDate = endOfMonth(now);
 
-    const deletedExpenses = await prisma.expense.deleteMany({
+    const deletedIncomes = await prisma.income.deleteMany({
       where: {
         userId: userSession.user.id,
         createdAt: {
@@ -83,7 +82,7 @@ export async function DELETE() {
     });
 
     return NextResponse.json(
-      { message: `${deletedExpenses.count} expenses deleted` },
+      { message: `${deletedIncomes.count} incomes deleted` },
       { status: 200 }
     );
   } catch (error) {
