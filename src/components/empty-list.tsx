@@ -1,23 +1,30 @@
 import React from 'react';
-import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
+import { Button } from '@nextui-org/button';
+import { useDisclosure } from '@nextui-org/modal';
+import { NewExpense } from './create-expense';
 
 interface Props {
   title: string;
-  path: string;
 }
-const EmptyList: React.FC<Props> = ({ title, path }) => {
+const EmptyList: React.FC<Props> = ({ title }) => {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   return (
     <div className="mt-32">
-      <h3 className="mb-12 text-4xl text-center text-foreground leading-normal capitalize font-bold">
+      <h3 className="mb-12 text-2xl text-center text-foreground leading-normal capitalize font-bold">
         Looks like you haven&apos;t added any{' '}
         <span className="text-secondary">{title} yet.</span>
       </h3>
       <p className="mb-8 text-center text-foreground ">
         No worries, just hit the{' '}
-        <Link href={path} className="text-secondary">
+        <Button className="text-secondary" onPress={onOpen}>
           &apos;Add&apos;
-        </Link>{' '}
+        </Button>
+        <NewExpense
+          isOpen={isOpen}
+          onClose={onClose}
+          onOpenChange={onOpenChange}
+        />{' '}
         button to get started
       </p>
       <div className="flex justify-center">

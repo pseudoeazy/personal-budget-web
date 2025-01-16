@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/authOptions';
 import { verifyEmailSchema } from '@/lib/validationSchemas';
 
 type Props = {
-  searchParams: { t: string; e: string };
+  searchParams: Promise<{ t: string; e: string }>;
 };
 
 const VerifyPage = async ({ searchParams }: Props) => {

@@ -6,6 +6,7 @@ import { Alert, Select, SelectItem } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
 import { Spinner } from '@nextui-org/spinner';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSWRConfig } from 'swr';
 import { categories } from '@/data/categories';
 import ErrorListAlert from '../errorlist-alert';
 import { ApiResponseError } from '@/lib/definitions';
@@ -18,6 +19,7 @@ import { createExpense } from '@/app/services/expense';
 import ErrorMessage from '../error-message';
 
 const Budget: React.FC = () => {
+  const { mutate } = useSWRConfig();
   const [category, setCategory] = useState(categories[0].id);
   const [isSubmit, setIsSubmit] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -51,6 +53,8 @@ const Budget: React.FC = () => {
     try {
       await createExpense(data);
       setIsSuccess(true);
+      //?page=1&sortBy=DESC&orderBy=DESC&limit=20
+      mutate(`${process.env.NEXT_PUBLIC_APP_URL}/api/expenses`);
     } catch (error: unknown) {
       console.log({ error });
       if (axios.isAxiosError(error)) {

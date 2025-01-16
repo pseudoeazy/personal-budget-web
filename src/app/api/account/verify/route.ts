@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserSession } from '@/lib/helper';
+import { getUserSession, verifyAndDeleteToken } from '@/lib/helper';
 import { verifyEmailSchema } from '@/lib/validationSchemas';
-import { verifyAndDeleteToken } from '@/lib/utils';
 
 export async function POST(request: NextRequest) {
   const isLoggedIn = await getUserSession();

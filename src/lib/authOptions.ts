@@ -6,7 +6,6 @@ import TwitterProvider from 'next-auth/providers/twitter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import bcrypt from 'bcrypt';
-
 import { prisma } from '@/lib/prisma';
 import { sendVerifyEmail } from '@/lib/helper';
 
@@ -23,7 +22,7 @@ export const authOptions: NextAuthOptions = {
           placeholder: 'Password',
         },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
@@ -69,5 +68,24 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: 'jwt',
+  },
+  callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      return url.startsWith(baseUrl) ? url : baseUrl + '/user';
+    },
+    async session({ session, token }) {
+      // Fetch minimal data needed for the session
+      session.user.id = token.id as string;
+      session.user.role = token.role as string | undefined;
+
+      return session;
+    },
+    async jwt({ token, user }) {
+      // Add user ID to token when logging in
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
   },
 };

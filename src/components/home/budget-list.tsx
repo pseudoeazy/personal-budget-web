@@ -21,7 +21,7 @@ const BudgetList: React.FC = () => {
           <div className="text-primary font-normal capitalize text-xl">
             description
           </div>
-          <div className="border border-primary p-0.5"> Filter Expenses</div>
+          <div className="p-0.5"> Amount</div>
         </div>
         {isError && (
           <div className="flex items-center justify-center w-full my-2">
@@ -32,8 +32,8 @@ const BudgetList: React.FC = () => {
         {expenses && (
           <section>
             {expenses.length !== 0 ? (
-              <div className="overflow-x-auto">
-                <table className="table">
+              <div className="overflow-x-auto ">
+                <table className="w-full">
                   <thead className="sr-only">
                     <tr className="text-foreground">
                       <th>Expenses</th>
@@ -41,9 +41,9 @@ const BudgetList: React.FC = () => {
                       <th>Amount</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="w-full flex flex-col space-y-4 ">
                     {expenses.map((expense, i) => (
-                      <tr key={i}>
+                      <tr key={i} className="flex justify-between">
                         <td>
                           <div className="flex items-center gap-3">
                             <div>
@@ -61,7 +61,7 @@ const BudgetList: React.FC = () => {
                           </div>
                         </td>
 
-                        <th>
+                        <th className="ml-2">
                           <div className="text-3xl text-foreground text-right capitalize">
                             £{expense.amount}
                           </div>
@@ -72,7 +72,7 @@ const BudgetList: React.FC = () => {
                 </table>
               </div>
             ) : (
-              <EmptyList title="expenses" path="/user/expenses" />
+              <EmptyList title="expenses" />
             )}
           </section>
         )}
