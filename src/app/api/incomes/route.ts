@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       skip,
     });
 
-    const totalIncomes = await prisma.expense.count({
+    const totalIncomes = await prisma.income.count({
       where: {
         userId: userSession.user.id,
         createdAt: {
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
   } catch (error: unknown) {
     console.error(error);
     return NextResponse.json(
-      { _errors: ['cannot retrieve expenses at this time'] },
+      { _errors: ['cannot retrieve income at this time'] },
       { status: 500 }
     );
   }
