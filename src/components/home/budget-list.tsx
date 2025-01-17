@@ -17,7 +17,7 @@ import {
 
 const BudgetList: React.FC = () => {
   const { data, isLoading, isError } = useFetch<PaginatedExpense>(
-    '/api/expenses?page=1&limit=5'
+    '/api/expenses?page=1&limit=10'
   );
 
   return (
