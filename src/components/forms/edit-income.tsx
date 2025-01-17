@@ -29,7 +29,6 @@ const EditIncome: React.FC<{ income: Income }> = ({ income }) => {
 
   const {
     register,
-    setValue,
     handleSubmit,
     reset,
     formState: { errors },
