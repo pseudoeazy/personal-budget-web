@@ -43,12 +43,21 @@ const Header = () => {
               Sign In
             </Button>
           )}
-          <Link
-            href="/register"
-            className="bg-primary text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            Sign Up
-          </Link>
+          {status === 'authenticated' ? (
+            <Link
+              href="/user"
+              className="bg-primary text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              href="/register"
+              className="bg-primary text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Sign Up
+            </Link>
+          )}
         </div>
       </div>
     </header>
