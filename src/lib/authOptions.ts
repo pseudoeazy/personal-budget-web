@@ -70,8 +70,11 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   callbacks: {
-    redirect: async ({ url, baseUrl }) => {
-      return url.startsWith(baseUrl) ? url : baseUrl + '/user';
+    async redirect({ url, baseUrl }) {
+      if (url === '/user' || url.startsWith(baseUrl)) {
+        return url;
+      }
+      return `${baseUrl}/user`;
     },
     async session({ session, token }) {
       // Fetch minimal data needed for the session

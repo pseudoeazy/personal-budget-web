@@ -62,9 +62,9 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
               <div className="border border-foreground self-end">
                 <button
                   className="flex items-center justify-center space-x-1 px-10"
-                  onClick={() => {
-                    signOut({ callbackUrl: '/' });
-                  }}
+                  onClick={() =>
+                    signOut({ callbackUrl: process.env.NEXT_PUBLIC_APP_URL })
+                  }
                 >
                   <span className="text-sm">Sign Out</span>
                   <LogOut />

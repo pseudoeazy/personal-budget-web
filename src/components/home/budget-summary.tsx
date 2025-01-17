@@ -11,7 +11,7 @@ type DataProps = {
 };
 const BudgetSummary = () => {
   const { data } = useFetch<DataProps[]>('/api/expenses/total');
-  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState('0');
 
   useEffect(() => {
     if (data) {
@@ -19,7 +19,7 @@ const BudgetSummary = () => {
         return prev + cur.amount;
       }, 0);
       if (Number.isInteger(t)) {
-        setTotalExpenses(t);
+        setTotalExpenses(formatToLocalCurrency(t));
       }
     }
   }, [data]);
@@ -56,7 +56,7 @@ const BudgetSummary = () => {
             spent
           </span>
           <span className="text-primary capitalize font-normal text-lg">
-            {formatToLocalCurrency(totalExpenses)}
+            {totalExpenses}
           </span>
         </div>
       </div>

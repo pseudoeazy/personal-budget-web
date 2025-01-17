@@ -3,26 +3,50 @@ import { startOfMonth, endOfMonth } from 'date-fns';
 import { prisma } from '@/lib/prisma';
 import { createIncomeSchema } from '@/lib/validationSchemas';
 import { getUserSession } from '@/lib/helper';
+import { getCurrentMonthRange } from '@/lib/utils';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const userSession = await getUserSession();
     if (!userSession) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const searchParams = request.nextUrl.searchParams;
 
+    const page = Number(searchParams.get('page') ?? 1);
+    const limit = Number(searchParams.get('limit') ?? 5);
+    const skip = (page - 1) * limit;
+
+    const { startDate, endDate } = getCurrentMonthRange();
     const incomes = await prisma.income.findMany({
       where: {
         userId: userSession.user.id,
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+      skip,
+    });
+
+    const totalIncomes = await prisma.expense.count({
+      where: {
+        userId: userSession.user.id,
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
 
-    return NextResponse.json(incomes, { status: 200 });
+    return NextResponse.json({ incomes, totalIncomes }, { status: 200 });
   } catch (error: unknown) {
     console.error(error);
     return NextResponse.json(
-      { _errors: ['cannot retrieve incomes at this time'] },
+      { _errors: ['cannot retrieve expenses at this time'] },
       { status: 500 }
     );
   }

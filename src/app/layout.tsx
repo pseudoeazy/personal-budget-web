@@ -1,3 +1,4 @@
+import NextTopLoader from 'nextjs-toploader';
 import type { Metadata } from 'next';
 import { openSans } from './fonts';
 import './globals.css';
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${openSans.variable}  antialiased`}>
+        <NextTopLoader />
         <AuthProvider>
           <UIProvider>
             <main className="page">{children}</main>

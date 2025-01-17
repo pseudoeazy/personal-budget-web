@@ -1,45 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import Header from '@/components/home/header';
 
 export default function Home() {
   return (
     <div className="bg-background min-h-screen text-text">
       {/* Header */}
-      <header className="bg-neutral p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold text-primary">MonthlyBudget Pro</h1>
-          <nav>
-            <ul className="flex gap-6">
-              <li>
-                <Link href="#features" className="hover:text-secondary">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="#dashboard" className="hover:text-secondary">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="#pricing" className="hover:text-secondary">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="#contact" className="hover:text-secondary">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <Link
-            href="/register"
-            className="bg-primary text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            Sign Up
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="container mx-auto text-center py-20">

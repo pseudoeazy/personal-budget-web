@@ -1,13 +1,12 @@
 import React from 'react';
-import { Button } from '@nextui-org/button';
+import IncomeList from './incomeList';
 
-const IncomePage = () => {
+const IncomesPage = () => {
   return (
-    <div>
-      <p>IncomePage</p>
-      <Button>Click me</Button>
+    <div className="min-h-screen flex md:gap-10 ">
+      <IncomeList />
     </div>
   );
 };
 
-export default IncomePage;
+export default IncomesPage;

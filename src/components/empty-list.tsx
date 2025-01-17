@@ -3,6 +3,7 @@ import { ShoppingCart } from 'lucide-react';
 import { Button } from '@nextui-org/button';
 import { useDisclosure } from '@nextui-org/modal';
 import { NewExpense } from './create-expense';
+import { NewIncome } from './create-income';
 
 interface Props {
   title: string;
@@ -20,11 +21,20 @@ const EmptyList: React.FC<Props> = ({ title }) => {
         <Button className="text-secondary" onPress={onOpen}>
           &apos;Add&apos;
         </Button>
-        <NewExpense
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpenChange={onOpenChange}
-        />{' '}
+        {title === 'expenses' && (
+          <NewExpense
+            isOpen={isOpen}
+            onClose={onClose}
+            onOpenChange={onOpenChange}
+          />
+        )}
+        {title === 'incomes' && (
+          <NewIncome
+            isOpen={isOpen}
+            onClose={onClose}
+            onOpenChange={onOpenChange}
+          />
+        )}
         button to get started
       </p>
       <div className="flex justify-center">

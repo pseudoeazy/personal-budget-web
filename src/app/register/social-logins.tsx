@@ -29,7 +29,10 @@ const SocialLogins = () => {
   return (
     <section className="flex justify-around mb-8 w-full">
       {providers.map((provider) => (
-        <Button key={provider.name} onPress={() => signIn(provider.name)}>
+        <Button
+          key={provider.name}
+          onPress={() => signIn(provider.name, { callbackUrl: '/user' })}
+        >
           <Tooltip content={provider.name}>{<provider.icon />}</Tooltip>
         </Button>
       ))}

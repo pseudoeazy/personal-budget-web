@@ -51,6 +51,7 @@ export async function DELETE(
     if (!userSession) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    console.log({ pathname: request.nextUrl.pathname });
 
     const { id } = await context.params;
 
@@ -58,15 +59,17 @@ export async function DELETE(
       where: { id, userId: userSession.user.id },
     });
 
-    if (!income)
+    if (!income) {
       return NextResponse.json(
         { _errors: ['income does not exist'] },
         { status: 404 }
       );
+    }
 
-    const deletedIncome = prisma.income.delete({
+    const deletedIncome = await prisma.income.delete({
       where: { id, userId: userSession.user.id },
     });
+
     return NextResponse.json(deletedIncome, { status: 200 });
   } catch (error) {
     console.error(error);
