@@ -16,7 +16,6 @@ import {
   Chip,
   Pagination,
   Tooltip,
-  ScrollShadow,
   useDisclosure,
 } from '@nextui-org/react';
 import { Alert } from '@nextui-org/alert';
@@ -150,6 +149,7 @@ export default function ExpensesList() {
     const total = Number(data?.totalExpenses);
     pages = total ? Math.ceil(total / rowsPerPage) : 0;
   } catch (e) {
+    console.log(e);
     pages = 0;
   }
   console.log({ totalPages: pages });

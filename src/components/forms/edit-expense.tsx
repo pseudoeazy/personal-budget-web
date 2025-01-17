@@ -50,7 +50,7 @@ const EditExpense: React.FC<{ expense: Expense }> = ({ expense }) => {
 
   useEffect(() => {
     reset({ name: expense.name, amount: expense.amount });
-  }, [expense]);
+  }, [expense, reset]);
 
   const refetchExpense = async () => {
     const rowsPerPage = [5, 10, 20];

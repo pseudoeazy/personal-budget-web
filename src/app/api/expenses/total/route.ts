@@ -1,9 +1,9 @@
 import { getUserSession } from '@/lib/helper';
 import { prisma } from '@/lib/prisma';
 import { getCurrentMonthRange } from '@/lib/utils';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const userSession = await getUserSession();
     if (!userSession) {

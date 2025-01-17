@@ -2,18 +2,20 @@ import { Expense } from '@/lib/definitions';
 
 export const expenses: Expense[] = [
   {
-    id: `1`,
+    userId: '1',
+    id: '1',
     name: 'Breakfast in Manilla Casino Resort',
-    category: 'Food',
-    amount: '125',
+    categoryId: 'Food',
+    amount: 125,
     createdAt: `January, 08-2025`,
     updatedAt: ``,
   },
   {
-    id: `2`,
+    userId: '2',
+    id: '2',
     name: 'Dinner',
-    category: 'Food',
-    amount: '75',
+    categoryId: 'Food',
+    amount: 75,
     createdAt: `January, 08-2025`,
     updatedAt: ``,
   },

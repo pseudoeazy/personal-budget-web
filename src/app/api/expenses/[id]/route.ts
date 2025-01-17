@@ -35,7 +35,7 @@ export async function PUT(
 
     return NextResponse.json(updatedExpense, { status: 200 });
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return NextResponse.json(
       { _errors: ['cannot update expense at this time'] },
       { status: 500 }
@@ -52,6 +52,7 @@ export async function DELETE(
     if (!userSession) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    console.log({ pathname: request.nextUrl.pathname });
 
     const { id } = await context.params;
 
@@ -72,7 +73,7 @@ export async function DELETE(
 
     return NextResponse.json(deletedExpense, { status: 200 });
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return NextResponse.json(
       { _errors: ['cannot delete expense at this time'] },
       { status: 500 }

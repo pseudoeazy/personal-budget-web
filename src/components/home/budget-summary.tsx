@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import CreateExpense from '../create-expense';
 import useFetch from '@/lib/hooks/useFetch';
 import { formatToLocalCurrency } from '@/lib/utils';
-import { Button } from '@nextui-org/button';
 import ResetExpenses from './reset-expenses';
 import BugdgetGraph from './budget-graph';
 

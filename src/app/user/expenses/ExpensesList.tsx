@@ -132,7 +132,7 @@ export default function ExpensesList() {
   );
 
   return (
-    <div>
+    <div className="w-full">
       <div className="w-full flex justify-between items-center">
         <Input
           className="w-full sm:max-w-[44%]"

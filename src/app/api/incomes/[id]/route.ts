@@ -3,41 +3,10 @@ import { prisma } from '@/lib/prisma';
 import { createIncomeSchema } from '@/lib/validationSchemas';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
+export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const userSession = await getUserSession();
-  if (!userSession) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  try {
-    const income = await prisma.income.findUnique({
-      where: {
-        id: params.id,
-        userId: userSession.user.id,
-      },
-    });
-
-    if (!income) {
-      return NextResponse.json(
-        { _errors: ['income not found'] },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(income, { status: 200 });
-  } catch (error: unknown) {
-    console.error(error);
-    return NextResponse.json(
-      { _errors: ['cannot retrieve income at this time'] },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PUT(request: NextRequest, params: { id: string }) {
   try {
     const userSession = await getUserSession();
     if (!userSession) {
@@ -51,9 +20,10 @@ export async function PUT(request: NextRequest, params: { id: string }) {
       return NextResponse.json(isValidIncome.error.format(), { status: 400 });
     }
 
+    const { id } = await context.params;
     const updatedIncome = await prisma.income.update({
       where: {
-        id: params.id,
+        id,
         userId: userSession.user.id,
       },
       data: {
@@ -72,15 +42,20 @@ export async function PUT(request: NextRequest, params: { id: string }) {
   }
 }
 
-export async function DELETE(request: NextRequest, params: { id: string }) {
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
     const userSession = await getUserSession();
     if (!userSession) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await context.params;
+
     const income = await prisma.income.findUnique({
-      where: { id: params.id, userId: userSession.user.id },
+      where: { id, userId: userSession.user.id },
     });
 
     if (!income)
@@ -90,7 +65,7 @@ export async function DELETE(request: NextRequest, params: { id: string }) {
       );
 
     const deletedIncome = prisma.income.delete({
-      where: { id: params.id },
+      where: { id, userId: userSession.user.id },
     });
     return NextResponse.json(deletedIncome, { status: 200 });
   } catch (error) {
