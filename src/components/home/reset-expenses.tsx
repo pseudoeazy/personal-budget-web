@@ -32,6 +32,14 @@ const DeletModal: React.FC<DeleteModalProps> = ({
       );
     }
   };
+  // const refetch = async (path: string) => {
+  //   const rowsPerPage = [5, 10, 20];
+  //   for (const row of rowsPerPage) {
+  //     await mutate(
+  //       `${process.env.NEXT_PUBLIC_APP_URL}/api/${path}?page=1&limit=${row}`
+  //     );
+  //   }
+  // };
 
   async function deleteExpenses() {
     try {
@@ -48,7 +56,7 @@ const DeletModal: React.FC<DeleteModalProps> = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Are you sure you want to reset all expense?
+              Are you sure you want to reset your expenses?
             </ModalHeader>
             <ModalBody>
               <p className="text-center text-red-300">
