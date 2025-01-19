@@ -1,4 +1,3 @@
-import SectionTitle from '../Common/SectionTitle';
 import SingleFaq from './SingleFaq';
 
 const Faq = () => {
@@ -23,31 +22,31 @@ const Faq = () => {
         <div className="-mx-4 mt-[60px] flex flex-wrap lg:mt-20">
           <div className="w-full px-4 lg:w-1/2">
             <SingleFaq
-              question="How to use TailGrids?"
-              answer="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              question="What is a budget tracking app, and how does it work?"
+              answer={`A budget tracking app helps you monitor your income, expenses, and savings by organizing and categorizing transactions. You input your financial data manually or sync your bank accounts, and the app provides insights through charts, reports, and alerts to help you stay on budget.`}
             />
             <SingleFaq
-              question="How to download icons from LineIcons?"
-              answer="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              question="Is the app free to use?"
+              answer={`The app offers both free and premium versions. The free version includes basic features such as manual expense tracking, while the premium version unlocks advanced tools like automatic syncing with bank accounts, custom reports, and ad-free usage.`}
             />
             <SingleFaq
-              question="Is GrayGrids part of UIdeck?"
-              answer="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              question="How secure is my financial data?"
+              answer={`Your security is our top priority. The app uses bank-level encryption (256-bit SSL) to protect your data. Additionally, we comply with GDPR and other privacy regulations to ensure your information remains private and secure.`}
             />
           </div>
 
           <div className="w-full px-4 lg:w-1/2">
             <SingleFaq
-              question="Can I use this template for commercial project?"
-              answer="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              question="Can I use the app without linking my bank accounts?"
+              answer={`Yes, you can manually input your transactions if you prefer not to link your bank accounts. This provides the same budgeting features without automatic updates from your bank.`}
             />
             <SingleFaq
-              question="Do you have plan to releasing Play Pro?"
-              answer="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              question="Does the app support multiple currencies?"
+              answer={`Yes, the app supports multiple currencies, making it ideal for users who travel or manage finances across different countries. You can set your preferred currency or switch between currencies as needed.`}
             />
             <SingleFaq
-              question="Where and how to host this template?"
-              answer="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              question="Does the app send alerts for overspending?"
+              answer={`Yes, the app provides customizable alerts to notify you when you're nearing or exceeding your budget for a specific category.`}
             />
           </div>
         </div>

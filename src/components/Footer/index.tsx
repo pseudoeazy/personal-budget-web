@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const Footer = () => {
   return (
     <footer className="relative z-10  px-8">
@@ -7,24 +9,24 @@ const Footer = () => {
             <div className="w-full px-4 md:w-2/3 lg:w-1/2">
               <div className="my-1">
                 <div className="-mx-3 flex items-center justify-center md:justify-start">
-                  <a
+                  <Link
                     href="/#"
                     className="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
                     Privacy policy
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/#"
                     className="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
                     Legal notice
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/#"
                     className="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
                     Terms of service
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

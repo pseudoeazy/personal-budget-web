@@ -8,7 +8,7 @@ const Header = () => {
   const { status } = useSession();
   return (
     <header className="bg-neutral p-4">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container flex-col md:flex-row mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold text-primary">MonthlyBudget</h1>
         <nav>
           <ul className="flex gap-6">

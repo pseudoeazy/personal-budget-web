@@ -1,3 +1,4 @@
+'use client';
 const Contact = () => {
   return (
     <section id="contact" className="relative py-20 md:py-[120px] px-8">
@@ -72,7 +73,11 @@ const Contact = () => {
               <h3 className="mb-8 text-2xl font-semibold text-secondary md:text-[28px] md:leading-[1.42]">
                 Send us a Message
               </h3>
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
+              >
                 <div className="mb-[22px]">
                   <label
                     htmlFor="fullName"

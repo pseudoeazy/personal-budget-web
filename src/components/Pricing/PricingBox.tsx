@@ -1,24 +1,25 @@
-import axios from 'axios';
+'use client';
+//import axios from 'axios';
 import React from 'react';
 import OfferList from './OfferList';
 import { Price } from '@/types/price';
 
 const PricingBox = ({ product }: { product: Price }) => {
   // POST request
-  const handleSubscription = async (e: any) => {
+  const handleSubscription = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { data } = await axios.post(
-      '/api/payment',
-      {
-        priceId: product.id,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    window.location.assign(data);
+    // const { data } = await axios.post(
+    //   '/api/payment',
+    //   {
+    //     priceId: product.id,
+    //   },
+    //   {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   }
+    // );
+    // window.location.assign(data);
   };
 
   return (
