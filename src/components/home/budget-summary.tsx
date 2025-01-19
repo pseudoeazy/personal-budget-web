@@ -14,13 +14,11 @@ const BudgetSummary = () => {
   const [totalExpenses, setTotalExpenses] = useState('0');
 
   useEffect(() => {
-    if (data) {
-      const t = data.reduce((prev, cur) => {
+    if (data && Array.isArray(data)) {
+      const expensesSum = data.reduce((prev, cur) => {
         return prev + cur.amount;
       }, 0);
-      if (Number.isInteger(t)) {
-        setTotalExpenses(formatToLocalCurrency(t));
-      }
+      setTotalExpenses(formatToLocalCurrency(expensesSum));
     }
   }, [data]);
 
@@ -39,7 +37,6 @@ const BudgetSummary = () => {
       </div>
       <div className="flex justify-center">
         <BugdgetGraph />
-        {/* <div className=" relative w-48 h-48  border-[10px] border-['#D2D2D2'] rounded-full"></div> */}
       </div>
 
       <div className="flex space-x-1 text-center">

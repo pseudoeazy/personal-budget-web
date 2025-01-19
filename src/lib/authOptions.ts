@@ -78,6 +78,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       // Fetch minimal data needed for the session
+
       session.user.id = token.id as string;
       session.user.role = token.role as string | undefined;
 
@@ -85,6 +86,7 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       // Add user ID to token when logging in
+
       if (user) {
         token.id = user.id;
       }

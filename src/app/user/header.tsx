@@ -1,5 +1,6 @@
 'use client';
 import CreateExpense from '@/components/create-expense';
+import { getCurrentUserName } from '@/lib/utils';
 import { LogOut, CircleUser, BadgeDollarSign, Menu } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -55,7 +56,7 @@ function Header({ sidebarOpen, setSidebarOpen }: Props) {
                 <div className="flex justify-center items-center space-x-1">
                   <CircleUser />
                   <span className="text-sm">
-                    Welcome {session.user?.name || session.user?.email}!
+                    Welcome {getCurrentUserName(session)}!
                   </span>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import { openSans } from './fonts';
 import './globals.css';
 import UIProvider from '@/components/providers/ui-provider';
 import AuthProvider from '@/components/providers/auth-provider';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Calculate smarter, spend wiser - Monthly Budget',
@@ -24,6 +25,7 @@ export default function RootLayout({
             <main className="page">{children}</main>
           </UIProvider>
         </AuthProvider>
+        <Footer />
       </body>
     </html>
   );

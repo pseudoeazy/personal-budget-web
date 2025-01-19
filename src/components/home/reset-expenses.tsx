@@ -11,12 +11,14 @@ import {
 } from '@nextui-org/react';
 import { useSWRConfig } from 'swr';
 import axios from 'axios';
+import { refetch } from '@/lib/utils';
 
 interface DeleteModalProps {
   isOpen: boolean;
   onOpenChange: () => void;
   onClose: () => void;
 }
+
 const DeletModal: React.FC<DeleteModalProps> = ({
   isOpen,
   onClose,
@@ -24,28 +26,11 @@ const DeletModal: React.FC<DeleteModalProps> = ({
 }) => {
   const { mutate } = useSWRConfig();
 
-  const refetchExpense = async () => {
-    const rowsPerPage = [5, 10, 20];
-    for (const row of rowsPerPage) {
-      await mutate(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/expenses?page=1&limit=${row}`
-      );
-    }
-  };
-  // const refetch = async (path: string) => {
-  //   const rowsPerPage = [5, 10, 20];
-  //   for (const row of rowsPerPage) {
-  //     await mutate(
-  //       `${process.env.NEXT_PUBLIC_APP_URL}/api/${path}?page=1&limit=${row}`
-  //     );
-  //   }
-  // };
-
   async function deleteExpenses() {
     try {
       await axios.delete('/api/expenses/');
       onClose();
-      await refetchExpense();
+      await refetch('/api/expense', mutate);
     } catch (error) {
       console.log(error);
     }
