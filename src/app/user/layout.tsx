@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import Footer from './footer';
+import Footer from '@/components/home/Footer';
 import LayoutContent from './layout-content';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';

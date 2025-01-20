@@ -35,7 +35,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="w-full px-4">
+            <div className="w-full px-4" id="dashboard">
               <div
                 className="wow fadeInUp relative z-10 mx-auto max-w-[640px]"
                 data-wow-delay=".25s"
