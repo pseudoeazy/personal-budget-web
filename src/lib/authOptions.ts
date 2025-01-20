@@ -64,6 +64,7 @@ export const authOptions: NextAuthOptions = {
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID!,
       clientSecret: process.env.TWITTER_CLIENT_SECRET!,
+      version: '1.1',
     }),
   ],
   session: {
@@ -78,7 +79,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       // Fetch minimal data needed for the session
-
+      // console.log('Token in Session:', { token, session });
       session.user.id = token.id as string;
       session.user.role = token.role as string | undefined;
 
@@ -86,11 +87,20 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       // Add user ID to token when logging in
+      // console.log('User in JWT:', { user, token });
 
       if (user) {
-        token.id = user.id;
+        token.id = user?.id || token.id || null;
       }
       return token;
     },
+    // async signIn({ user, account, profile }) {
+    //   console.log('User:', user);
+    //   console.log('Account:', account);
+    //   console.log('Profile:', profile);
+    //   return true;
+    // },
   },
+  debug: false,
+  secret: process.env.NEXTAUTH_SECRET!,
 };
