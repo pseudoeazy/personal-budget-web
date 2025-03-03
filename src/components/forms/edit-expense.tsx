@@ -60,6 +60,7 @@ const EditExpense: React.FC<{ expense: Expense }> = ({ expense }) => {
       );
     }
   };
+
   const onSubmit: SubmitHandler<CreateExpenseInputs> = async (data) => {
     setIsSubmit(true);
 
